@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+  <div class="block">
+        <form id="registerForm" class="container">
+            <label for="username">Username:</label>
+            <input id="username" type="text" name="username" placeholder="John Doe">
+
+            <label for="email">Email:</label>
+            <input id="email" type="email" name="email" placeholder="example@gmail.com" required>
+
+            <label for="password">Password:</label>
+            <input id="password" type="password" name="password" placeholder="passw0rD" required>
+
+            <button class="sr_button" type="submit">Register</button>
+        </form>
+  </div>
+  <script type="module">
+      document.getElementById('registerForm').addEventListener('submit', async function(e){
+          e.preventDefault();
+
+          const userDTO = {
+              email: document.getElementById('email').value,
+              username: document.getElementById('username').value,
+              password: document.getElementById('password').value,
+          };
+
+          try {
+              const response = await fetch('/users', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(userDTO)
+              });
+
+              if(response.ok){
+                  alert('User registered!');
+                  console.log(response);
+              } else {
+                  const err = await response.text();
+                  alert('Registration failed: ' + err);
+              }
+          } catch (error) {
+              alert('Network error: ' + error);
+          }
+      });
+  </script>
+</body>
+<style>
+
+</style>
+</html>
