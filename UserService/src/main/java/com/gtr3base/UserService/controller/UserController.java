@@ -21,18 +21,19 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<String> register(@RequestBody UserDTO userDTO){
+    public ResponseEntity<String> register(@RequestBody UserDTO userDTO) {
         try {
             userService.register(userDTO);
             return ResponseEntity.ok("User registered successfully");
-        }
-        catch (RuntimeException e){
+        } catch (RuntimeException e) {
             log.error("Operation failed");
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-        }
+    }
+
     @PutMapping
-    public void update(@RequestBody UserDTO userDTO){
+    public ResponseEntity<String> update(@RequestBody UserDTO userDTO) {
         userService.update(userDTO);
+        return ResponseEntity.ok("User updated");
     }
 }
