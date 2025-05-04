@@ -52,6 +52,86 @@
   </script>
 </body>
 <style>
+    body {
+        background-color: #0d0d1a;
+        margin: 0;
+        font-family: "Lucida Console";
+    }
 
+    .block {
+        margin: auto;
+        width: 50%;
+        padding: 110px;
+    }
+
+    .container {
+        width: min(300px, 80%);
+        margin: 0 auto;
+        padding: 60px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        background: rgba(41, 10, 89, 0.85);
+        border-radius: 10px;
+        position: relative;
+        transform-style: preserve-3d;
+        transform: perspective(800px) rotateX(5deg);
+        transition: all 0.5s ease;
+        box-shadow:
+        0 1px 2px rgba(255, 105, 180, 0.4),
+        0 2px 4px rgba(180, 70, 255, 0.4),
+        0 4px 8px rgba(130, 0, 255, 0.4),
+        0 8px 16px rgba(100, 0, 255, 0.5);
+    }
+
+    .container:hover {
+        transform: perspective(1200px) rotateX(15deg) translateY(-2px);
+        box-shadow:
+        0 5px 10px rgba(255, 105, 180, 0.5),
+        0 10px 20px rgba(150, 70, 255, 0.4),
+        0 15px 30px rgba(120, 0, 255, 0.4),
+        0 20px 40px rgba(100, 0, 255, 0.4);
+    }
+
+    .container label {
+        color: #ffb3ff;
+    }
+
+    .container input {
+        box-sizing: border-box;
+        border: 1px solid #c77dff;
+        background: rgba(255, 255, 255, 0.9);
+        color: #1d1c53;
+        border-radius: 4px;
+        padding: 10px;
+        font-family: "Lucida Console";
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .container input:focus {
+        outline: none;
+        border-color: #e0aaff;
+        box-shadow: 0 0 5px rgba(200, 100, 255, 0.6);
+        background: #ffffff;
+    }
+
+    .container button {
+        background: linear-gradient(135deg, #ff4d6d, #a97eff);
+        color: #ffffff;
+        border: none;
+        padding: 12px;
+        margin-top: 20px;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.2s;
+        font-weight: bold;
+        font-family: "Lucida Console";
+        border-radius: 4px;
+    }
+
+    .container button:hover {
+        background: linear-gradient(135deg, #ff4da6, #d0aaff);
+        transform: scale(1.03);
+    }
 </style>
+
 </html>

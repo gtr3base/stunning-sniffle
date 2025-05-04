@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="'Profile - ' + (${user != null} ? ${user.username} : 'Unknown')">Profile</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0d0d1a;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      padding: 15px 40px;
+      box-shadow: 0 8px 20px rgba(255, 105, 180, 0.15);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      animation: fadeDown 0.6s ease-out forwards;
+    }
+
+    @keyframes fadeDown {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .brand {
+      font-size: 1.4em;
+      font-weight: bold;
+      color: #d0aaff;
+      text-shadow: 0 0 5px #a97eff;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 25px;
+    }
+
+    .nav-item {
+      position: relative;
+      color: #caa8ff;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1em;
+      transition: color 0.3s ease;
+    }
+
+    .nav-item::after {
+      content: "";
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: #ff4d6d;
+      transition: width 0.3s ease;
+    }
+
+    .nav-item:hover {
+      color: #ff4d6d;
+    }
+
+    .nav-item:hover::after {
+      width: 100%;
+    }
+
+    .profile-container {
+      padding: 60px 40px;
+      max-width: 600px;
+      margin: 60px auto;
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(255, 105, 180, 0.1);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: slideUp 1s ease-out 0.2s forwards;
+    }
+
+    @keyframes slideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .profile-title {
+      font-size: 2em;
+      color: #d0aaff;
+      margin-bottom: 20px;
+    }
+
+    .profile-field {
+      font-size: 1.2em;
+      margin: 10px 0;
+      color: #ffb3ff;
+      transition: transform 0.3s, color 0.3s;
+    }
+
+    .profile-field:hover {
+      transform: translateX(5px);
+      color: #ffaaff;
+    }
+
+    .follower-list {
+      margin-top: 20px;
+      text-align: left;
+      list-style: none;
+      padding-left: 0;
+      animation: fadeIn 1s ease-in 0.5s forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .follower-list li {
+      color: #ffffff;
+      padding: 5px 0;
+      transition: color 0.3s, transform 0.3s;
+    }
+
+    .follower-list li:hover {
+      color: #ff85c1;
+      transform: translateX(10px);
+    }
+  </style>
+</head>
+<body>
+<div class="navbar">
+  <div class="brand">SMedia</div>
+  <div class="nav-links">
+    <a id="meLink" class="nav-item" href="#">Profile</a>
+    <a class="nav-item" href="/api/posts">Posts</a>
+    <a id="friendsLink" class="nav-item" href="#">Followers</a>
+  </div>
+</div>
+
+<div class="profile-container">
+  <div class="profile-title" th:text="'Profile: ' + ${user.username}">Profile: username</div>
+  <div class="profile-field" th:text="'Email: ' + ${user.email}">Email: user@example.com</div>
+  <div class="profile-field">Followers:</div>
+  <ul class="follower-list">
+    <li th:each="follower : ${user.followers}" th:text="${follower.username}">follower_username</li>
+  </ul>
+</div>
+
+<script type="module">
+  function getCookie(name) {
+    const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return match ? decodeURIComponent(match[2]) : null;
+  }
+
+  const me = getCookie('me');
+  if (me) {
+    document.getElementById('meLink').href = `/users/${me}`;
+    document.getElementById('friendsLink').href = `/users/${me}/followers`;
+  } else {
+    document.getElementById('meLink').textContent = "Profile";
+  }
+</script>
+</body>
+</html>

@@ -7,14 +7,18 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="UserService" />
         <module name="DiscoveryServer" />
+        <module name="APIGateway" />
+        <module name="UserService" />
+        <module name="PostService" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="APIGateway" options="-parameters" />
       <module name="DiscoveryServer" options="-parameters" />
+      <module name="PostService" options="-parameters" />
       <module name="UserService" options="-parameters" />
     </option>
   </component>

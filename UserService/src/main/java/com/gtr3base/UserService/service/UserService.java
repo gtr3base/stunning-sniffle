@@ -30,21 +30,25 @@ public class UserService {
     }
 
     public void register(UserDTO userDTO){
-        if (userDTO == null) {
-            throw new RuntimeException("User data cannot be null");
-        }
+        try {
+            if (userDTO == null) {
+                throw new RuntimeException("User data cannot be null");
+            }
 
-        if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
-            throw new RuntimeException("User with this email already exists");
+            if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
+                throw new RuntimeException("User with this email already exists");
+            }
+            User user = User.builder()
+                    .email(userDTO.getEmail())
+                    .followers(Collections.emptyList())
+                    .password(passwordEncoder.encode(userDTO.getPassword()))
+                    .role(RoleEnum.USER_ROLE)
+                    .username(userDTO.getUsername()).build();
+            userRepository.save(user);
+            log.info("User " + userDTO.getUsername() + " registered");
+        } catch (RuntimeException e) {
+            log.error("Operation failed");
         }
-        User user = User.builder()
-                .email(userDTO.getEmail())
-                .followers(Collections.emptyList())
-                .password(passwordEncoder.encode(userDTO.getPassword()))
-                .role(RoleEnum.USER_ROLE)
-                .username(userDTO.getUsername()).build();
-        userRepository.save(user);
-        log.info("User "+userDTO.getUsername()+" registered");
     }
 
     public void update(UserDTO userDTO) {
